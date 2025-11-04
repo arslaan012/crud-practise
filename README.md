@@ -169,9 +169,3 @@ Use UI to test requests easily.
 - Switch to database (MongoDB / SQLite)
 
 ---
-
-## 🙌 Author
-Created by **Mohd Arslaan** — exploring backend concepts & file system APIs.
-
-Feel free to contribute ✨
-
