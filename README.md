@@ -33,7 +33,7 @@ Swagger UI | API docs
 
 ## 📂 Project Structure
 
-```
+```text
 src/
  ├─ api/
  │   ├─ createFile.js
