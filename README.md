@@ -152,7 +152,6 @@ http://localhost:3000/api-docs
 Use UI to test requests easily.
 
 ---
-
 ## 🔐 Error Handling
 | Case | Status | Message |
 |------|--------|--------|
