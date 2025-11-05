@@ -1,170 +1,174 @@
-# CRUD File-Based API
+```md
+# 🔐 File-Based CRUD API with JWT Authentication & Swagger
 
-This project is a simple Node.js Express server that performs CRUD (Create, Read, Update, Delete) operations on a JSON file (`text.json`). Every change made through the API directly updates the file.
+A Node.js + Express backend that performs **CRUD operations on a JSON file** and includes **JWT authentication**, **modular routes/controllers**, **middleware**, and **Swagger API documentation**.
+
+This is a beginner-friendly backend starter demonstrating **auth + protected routes + file storage** before switching to a real DB.
+
+---
 
 ## 🚀 Features
-- File-based storage using `fs` module
-- CRUD operations through REST API endpoints
-- Swagger documentation for easy testing
-- JSON-based data format
-- Simple and easy to extend
+| Feature | Description |
+|--------|------------|
+✅ File-based CRUD (JSON storage)  
+✅ JWT Authentication (Register & Login)  
+✅ Protected Routes (middleware)  
+✅ Swagger API Docs  
+✅ MVC folder structure  
+✅ Migration setup (for auth table)  
 
 ---
 
 ## 📦 Tech Stack
 | Technology | Purpose |
 |-----------|--------|
-| Node.js | Runtime environment |
-| Express.js | Backend framework |
-| FS (File System) | File read/write operations |
-| Swagger UI | API documentation |
+Node.js | Runtime  
+Express.js | Server Framework  
+FS Module | File database  
+bcrypt | Hash passwords  
+jsonwebtoken | Token auth  
+Swagger UI | API docs  
 
 ---
 
 ## 📂 Project Structure
+
 ```
-├── api
-│   ├── readFile.js
-│   ├── createFile.js
-│   ├── updateFile.js
-│   └── deleteFile.js
-├── text.json
-└── server.js
+src/
+ ├─ api/
+ │   ├─ createFile.js
+ │   ├─ readFile.js
+ │   ├─ updateFile.js
+ │   └─ deleteFile.js
+ ├─ controllers/
+ │   ├─ authController.js
+ │   └─ crudController.js
+ ├─ routes/
+ │   ├─ authRoutes.js
+ │   └─ crudRoutes.js
+ ├─ middleware/
+ │   └─ verify.js
+ ├─ schema/
+ │   └─ users.sql
+ ├─ migrations/
+ │   └─ migrate.js
+ ├─ constants/
+ │   └─ httpStatusCodes.json
+ ├─ text.json
+ └─ server.js
 ```
 
 ---
 
-## 🔧 Installation
-### 1️⃣ Clone the repository
+## 🛠 Installation
+
+### 1️⃣ Clone repo
 ```bash
 git clone <repo-url>
 cd project-folder
 ```
-### 2️⃣ Install dependencies
+
+### 2️⃣ Install packages
 ```bash
 npm install
 ```
 
----
-
-## ▶️ Run the Server
-```bash
-node server.js
+### 3️⃣ Create `.env`
 ```
-Server will start at:
+JWT_SECRET=yourSecretKey
+```
+
+### 4️⃣ Run server
+```bash
+npm start
+```
+
+Server URL
+
 ```
 http://localhost:3000
 ```
-Swagger Docs:
+
+Swagger Docs
+
 ```
 http://localhost:3000/api-docs
 ```
 
 ---
 
-## 📘 API Endpoints
+## 👤 Authentication Endpoints
 
-### **1. Read Data**
-**GET** `/read?obj=<key>`
+### ✅ Register  
+**POST** `/auth/register`
 
-Example:
-```
-/read?obj=user1
-```
-Response:
 ```json
 {
-  "message": "File read",
-  "data": {
-    "name": "John",
-    "age": 22
-  }
-}
-```
-
----
-### **2. Create Data**
-**POST** `/create`
-
-Body:
-```json
-{
-  "obj": "user1",
-  "name": "John",
-  "age": "22"
-}
-```
-Response:
-```json
-{
-  "message": "Object created"
-}
-```
-
----
-### **3. Update Data**
-**PUT** `/update`
-
-Body:
-```json
-{
-  "obj": "user1",
   "name": "John Doe",
-  "age": "23"
+  "email": "john@example.com",
+  "password": "123456"
 }
 ```
-Response:
+
+### ✅ Login  
+**POST** `/auth/login`
+
 ```json
 {
-  "message": "File updated"
+  "email": "john@example.com",
+  "password": "123456"
 }
 ```
 
----
-### **4. Delete Data**
-**DELETE** `/delete?obj=<key>`
+**Response**
 
-Example:
-```
-/delete?obj=user1
-```
-Response:
 ```json
 {
-  "message": "Object deleted"
+  "token": "JWT_TOKEN_HERE"
 }
 ```
 
 ---
 
-## 📝 Notes
-- All operations directly modify `text.json`
-- API validates required fields
-- If object key exists, create will return error
+## 🔑 Using the JWT Token
 
----
+Copy token from login and paste in Swagger:
 
-## 📖 Swagger Usage
-Visit:
+**Authorize → `Bearer <token>`**
+
+Or send in header manually:
+
 ```
-http://localhost:3000/api-docs
+Authorization: Bearer <token>
 ```
-Use UI to test requests easily.
-
----
-## 🔐 Error Handling
-| Case | Status | Message |
-|------|--------|--------|
-| Missing field | 400 | "Some data is not found" |
-| Object doesn't exist | 404 | "Object not found" |
-| Duplicate object | 400 | "Object already exists" |
 
 ---
 
-## ✅ Future Enhancements
-- Add validation schema
-- Support nested objects
-- File backup system
-- Switch to database (MongoDB / SQLite)
+## 📘 Protected CRUD Routes
+
+| Method | Endpoint | Description |
+|-------|----------|------------|
+GET | `/users/read?obj=<key>` | Read entry  
+POST | `/users/create` | Create entry  
+PUT | `/users/update` | Update entry  
+DELETE | `/users/delete?obj=<key>` | Delete entry  
+
+### Example Body (Create)
+```json
+{
+  "obj": "user1",
+  "name": "Alice",
+  "age": 22
+}
+```
+
+---
+
+## 🔧 Migration (All Tables)
+To create DB all tables:
+
+```bash
+npm run migrate
+```
 
 ---
