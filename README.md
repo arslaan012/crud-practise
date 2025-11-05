@@ -1,5 +1,5 @@
 ```md
-# 🔐 File-Based CRUD API with JWT Authentication & Swagger
+# 🔐 CRUD API with JWT Authentication & Swagger
 
 A Node.js + Express backend that performs **CRUD operations on a JSON file** and includes **JWT authentication**, **modular routes/controllers**, **middleware**, and **Swagger API documentation**.
 
