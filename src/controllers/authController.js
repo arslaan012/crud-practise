@@ -1,6 +1,8 @@
 const pool = require('../config/dbConfig')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const statusCodes = require('../constants/httpStatusCodes.json')
+
 
 const JWT_SECRET = process.env.JWT_SECRET || 'something'
 
@@ -14,7 +16,7 @@ const register = async(req, res) => {
         [name, email, hashPass]
     );
 
-    return res.status(201).json({msg: "User Created"});
+    return res.status(statusCodes.CREATED.code).json({msg: "User Created"});
 }
 
 const login = async(req, res) => {
@@ -35,11 +37,11 @@ const login = async(req, res) => {
 
 
     const check = await bcrypt.compare(password, user.upass);
-    if(!check) return res.status(401).json({error: "Invalid password"})
+    if(!check) return res.status(statusCodes.UNAUTHORIZED.code).json({message: statusCodes.UNAUTHORIZED.message, error: "Invalid password"})
 
     const token = jwt.sign({id: user.id, email: user.uemail}, JWT_SECRET, {expiresIn: "1h"})
 
-    return res.json({token})
+    return res.status(statusCodes.OK.code).json({message: statusCodes.OK.message, token})
 }
 
 

@@ -3,7 +3,7 @@ const router = express.Router()
 
 const { verify } = require("../middleware/verify")
 
-const { readData, createData, updateData, deleteData } = require('../controllers/crudController')
+const { readData, createData, updateData, deleteData, profileData } = require('../controllers/crudController')
 
 const statusCodes = require('../constants/httpStatusCodes.json')
 
@@ -47,6 +47,34 @@ const statusCodes = require('../constants/httpStatusCodes.json')
  */
 
 router.get('/read', verify, readData)
+
+/**
+ * @swagger
+ * /users/readProfile:
+ *   get:
+ *     summary: Get logged-in user's profile
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     description: Returns profile data of the authenticated user based on the JWT token.
+ *     responses:
+ *       200:
+ *         description: User profile data fetched successfully
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: "User data fetched"
+ *               user:
+ *                 id: 1
+ *                 name: "John Doe"
+ *                 email: "john@example.com"
+ *       401:
+ *         description: Token missing or invalid
+ *       500:
+ *         description: Server error
+ */
+
+router.get('/readProfile', verify, profileData)
 
 
 /**

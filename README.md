@@ -49,7 +49,9 @@ src/
  ├─ middleware/
  │   └─ verify.js
  ├─ schema/
- │   └─ users.sql
+ │   └─ empTable.sql
+ │   └─ userCrud.sql
+ │   └─ userAuth.sql
  ├─ migrations/
  │   └─ migrate.js
  ├─ constants/
